@@ -3,7 +3,7 @@ aliases:
 - about-us
 - about-hugo
 - contact
-date: "20121-10-19"
+date: "2019-02-28"
 description: Hugo, the world's fastest framework for building websites
 lastmod: "2020-10-09"
 license: CC BY-NC-ND
