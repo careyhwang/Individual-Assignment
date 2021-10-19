@@ -29,3 +29,12 @@ London, UK
 ![篁岭 Huang Ridge](P7030551.jpg)  ![婺源 Wuyuan](P7030557.jpg) 
 
 ![Photo by Hanrui Wang](P7030570.jpg)  ![Photo by Hanrui Wang](P7040855.jpg)
+
+## 2021/06/30 Graduation 
+复旦 Fudan, Shanghai, China 
+
+![](P6220303-编辑.jpg)  ![](P6221346.jpg) 
+
+![](P6221762.jpg) ![](P6220096.jpg)  
+
+
