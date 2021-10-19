@@ -46,6 +46,13 @@ London, UK
 ![](P8210035.jpg) ![](P8210057.jpg)
 
 
+## 2020/09/20 Beijing
+北京 Beijing, China 
+
+![Photo by Shunniu Liu](IMG_0435.jpg)   ![Photo by Shunniu Liu](IMG_0433.jpg) 
+
+![Photo by Shunniu Liu](IMG_0437.jpg)
+
 
 
 
