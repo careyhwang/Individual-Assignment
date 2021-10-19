@@ -1,4 +1,4 @@
-baseURL: https://hanrui-wang.netlify.app/
+baseurl: https://hanrui-wang.netlify.app/
 languageCode: en-us
 theme: "hugo-theme-stack"
 paginate: 5
