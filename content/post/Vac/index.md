@@ -4,7 +4,7 @@ categories:
 - Hobbies
 date: "2019-06-12"
 description: Modern Poetries
-image: IMG_0456.jpg
+image: vaccine1.png
 tags:
 - Hobbies
 title: New Moon
