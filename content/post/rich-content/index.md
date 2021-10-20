@@ -3,8 +3,9 @@ author: Hanrui Wang
 date: "2021-06-30"
 description: Tang and Song Dynasties
 tags:
-- shortcodes
-- privacy
+- hobbies
+- videos
+image: 233.jpg
 title: Ancient Chinese Literature
 ---
 
