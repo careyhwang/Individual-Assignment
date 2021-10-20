@@ -1,48 +1,39 @@
 ---
-author: Hugo Authors
+author: Hanrui Wang
 categories:
-- Test
-date: "2019-03-05"
-description: Guide to emoji usage in Hugo
-image: the-creative-exchange-d2zvqp3fpro-unsplash.jpg
+- Hobbies
+date: "2019-06-12"
+description: Modern Poetries
+image: 20191215-PC150204.jpg
 tags:
-- emoji
-title: Emoji Support
+- Hobbies
+title: New Moon
 ---
 
-Emoji can be enabled in a Hugo project in a number of ways. 
+
 <!--more-->
-The [`emojify`](https://gohugo.io/functions/emojify/) function can be called directly in templates or [Inline Shortcodes](https://gohugo.io/templates/shortcode-templates/#inline-shortcodes). 
 
-To enable emoji globally, set `enableEmoji` to `true` in your site's [configuration](https://gohugo.io/getting-started/configuration/) and then you can type emoji shorthand codes directly in content files; e.g.
 
-<p><span class="nowrap"><span class="emojify">🙈</span> <code>:see_no_evil:</code></span>  <span class="nowrap"><span class="emojify">🙉</span> <code>:hear_no_evil:</code></span>  <span class="nowrap"><span class="emojify">🙊</span> <code>:speak_no_evil:</code></span></p>
-<br>
 
-The [Emoji cheat sheet](http://www.emoji-cheat-sheet.com/) is a useful reference for emoji shorthand codes.
+### 2021/03/05 理图
+> 我盼那长窗外玉兰芽的幽香  
+> 但春信不来，春信不来  
+> 我盼那夜半悬铃木间的低语
+> 但夜莺不来，夜莺不来  
+> 我总是这样期盼着，期盼着  
+> 有一天让石头显出石头的质感，感受它回应我的体温
 
-***
+### 2021/05/03 曦园
+> 识得？  
+> 在我，这答案是绝望的
 
-**N.B.** The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.
+### 2021/05/20 光草
+> 天是黑的  
+> 但月是白的  
+> 风，融和琴瑟萧笙的音韵
+> 树，餐饮星辰日月的光辉  
+> 我闭上眼睛，草刺痛了我的面颊  
+> 空空
 
-{{< highlight html >}}
-.emoji {
-  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
-}
-{{< /highlight >}}
 
-{{< css.inline >}}
-<style>
-.emojify {
-	font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
-	font-size: 2rem;
-	vertical-align: middle;
-}
-@media screen and (max-width:650px) {
-  .nowrap {
-    display: block;
-    margin: 25px 0;
-  }
-}
-</style>
-{{< /css.inline >}}
+
