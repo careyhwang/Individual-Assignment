@@ -1,49 +1,67 @@
 ---
-author: Hugo Authors
-date: "2019-03-08"
-description: A brief guide to setup KaTeX
+author: Hanrui Wang
+date: "2021-10-08"
+description: Data from Fred
 math: true
-title: Math Typesetting
+title: Changes of CPI and Its Components
 ---
 
-Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.
-<!--more-->
 
-In this example we will be using [KaTeX](https://katex.org/)
+## Data Processing
 
-- Create a partial under `/layouts/partials/math.html`
-- Within this partial reference the [Auto-render Extension](https://katex.org/docs/autorender.html) or host these scripts locally.
-- Include the partial in your templates like so:  
 
-```bash
-{{ if or .Params.math .Site.Params.math }}
-{{ partial "math.html" . }}
-{{ end }}
+### Find [CPI components at FRED](https://fredaccount.stlouisfed.org/public/datalist/843).
+
+```{r,load_movies, warning=FALSE, message=FALSE}
+movies <- read_csv(here::here("data", "movies.csv"))
 ```
 
-- To enable KaTex globally set the parameter `math` to `true` in a project's configuration
-- To enable KaTex on a per page basis include the parameter `math: true` in content files
+### Data Cleaning
 
-**Note:** Use the online reference of [Supported TeX Functions](https://katex.org/docs/supported.html)
+1. Generate a vector of components, and then pass it to `tidyquant::tq_get(get = "economic.data", from =  "2000-01-01")` to get all data since January 1, 2000
 
-{{< math.inline >}}
-{{ if or .Page.Params.math .Site.Params.math }}
-<!-- KaTeX -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-{{ end }}
-{{</ math.inline >}}
+1. Since the data downloaded is an index with various starting dates, we have to calculate the yearly, or 12-month change, using the `lag` function, and specifically, `year_change = value/lag(value, 12) - 1`, which means comparing the current month's value with that 12 months ago lag(value, 12).
+1. Order components so the higher the yearly change, the earlier does that component appear.
+1. Make sure that the **All Items** CPI (CPIAUCSL) appears first.
+1. Add a `geom_smooth()` for each component to get a sense of the overall trend.
+1. Colour the points according to whether yearly change was positive or negative. 
 
-### Examples
+```{r}
+url <- "https://fredaccount.stlouisfed.org/public/datalist/843"
+tables <- url %>% 
+  read_html() %>% 
+  html_nodes(css="table")
+economic.data <- map(tables, . %>% 
+             html_table(fill=TRUE)%>% 
+             janitor::clean_names())
+#economic.data, component is "list"
+  # list of CPI component
+component <- economic.data[[2]]
+CPI.components <- component[2]
+CPI.vector <- as.vector(unlist(CPI.components, use.names=FALSE))
+k<-component[,1:2]
+names(k)[2]<-"symbol"
 
-{{< math.inline >}}
-<p>
-Inline math: \(\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…\)
-</p>
-{{</ math.inline >}}
+# Pass symbols to tq_get to get economic data
+FRED_data_m <- CPI.vector %>%
+  tidyquant::tq_get(get = "economic.data", from =  "2000-01-01")
 
-Block math:
-$$
- \varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } } 
-$$
+FRED_data<-left_join(k,FRED_data_m,by="symbol")
+FRED_data$title<-gsub("Consumer Price Index for All Urban Consumers: ","",FRED_data$title)
+FRED_data$title<-gsub("in U.S. City Average","",FRED_data$title)
+
+FRED_data$year_change = FRED_data$price/(lag(FRED_data$price,12))-1
+FRED_data<-FRED_data %>% 
+  filter(year(date) %in% c(2016,2017,2018,2019,2020,2021)) %>% 
+  mutate(z= if_else(year_change > 0,1,0)) %>% 
+  group_by(title) %>% 
+  mutate(m=max(year_change)) %>% 
+  arrange(desc(m))
+
+```
+![](CPI.jpg)
+
+
+
+
+
