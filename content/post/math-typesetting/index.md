@@ -4,6 +4,7 @@ date: "2021-10-08"
 description: Data from Fred
 math: true
 title: Changes of CPI and Its Components
+image: CPI.jpg
 ---
 
 
@@ -23,8 +24,6 @@ movies <- read_csv(here::here("data", "movies.csv"))
 1. Since the data downloaded is an index with various starting dates, we have to calculate the yearly, or 12-month change, using the `lag` function, and specifically, `year_change = value/lag(value, 12) - 1`, which means comparing the current month's value with that 12 months ago lag(value, 12).
 1. Order components so the higher the yearly change, the earlier does that component appear.
 1. Make sure that the **All Items** CPI (CPIAUCSL) appears first.
-1. Add a `geom_smooth()` for each component to get a sense of the overall trend.
-1. Colour the points according to whether yearly change was positive or negative. 
 
 ```{r}
 url <- "https://fredaccount.stlouisfed.org/public/datalist/843"
@@ -59,7 +58,88 @@ FRED_data<-FRED_data %>%
   arrange(desc(m))
 
 ```
+
+## Plotting
+
+### All Components
+
+1. Add a `geom_smooth()` for each component to get a sense of the overall trend.
+1. Colour the points according to whether yearly change was positive or negative. 
+
+```{r coding challeng 2}
+
+Chart<-rbind(FRED_data[FRED_data$symbol=="CPIAUCSL",1:7],FRED_data[FRED_data$symbol!="CPIAUCSL",1:7])
+Chart$title<-factor(Chart$title, levels = unique(Chart$title))
+
+Chart%>%
+  ggplot(aes(x = date, y = year_change,colour=z)) + 
+  geom_smooth(method = 'loess',color="grey") +
+  geom_point(show.legend = FALSE,size=0.8) +
+  facet_wrap(~ title, ncol = 7, nrow = 7, scales = "free") +
+  scale_y_continuous(labels = scales::percent)+
+  theme_tq()+
+  scale_colour_gradient(low = "#9fc7f1",high = "#d58383")+
+   theme(axis.text.x = element_text(angle = 90, hjust = 1, margin = margin(2, 0, 2, 0)))+
+  theme(axis.text.x = element_text(size=4),
+            axis.text.y = element_text(size=4, colour = 'black'),
+            strip.text = element_text(size=4),
+        panel.spacing = unit(0, "lines"),
+        strip.background = element_rect(fill="grey")) +
+  theme(strip.text = element_text(colour = "black")) +
+
+  labs(
+    title = "Yearly change of US CPI(All Items) and its components",
+    subtitle = "YoY change being positive and negative \n Jan 2016 to Aug 2021",
+    x = "",
+    y = "YoY % Change"
+  )
+```
 ![](CPI.jpg)
+
+### Major Components
+
+Find the [relative importance of components in the Consumer Price Indexes: U.S. city average, December 2020](https://www.bls.gov/cpi/tables/relative-importance/2020.htm). 
+Choose a smaller subset of the components and only list the major categories (Housing, Transportation, Food and beverages, Medical care, Education and communication, Recreation, and Apparel), and sorted according to their relative importance.
+
+```{r}
+
+### There is no data for Medical care, Education and communication, Recreation
+Chart2<-Chart%>%
+  filter(symbol %in% c("CPIHOSSL", "CPITRNSL", "CPIFABSL", "CPIAPPSL"))
+Chart2$title<-factor(Chart2$title, levels = c("Housing ","Transportation ","Food and Beverages ","Apparel "))
+   
+Chart2%>% 
+  ggplot(aes(x = date, y = year_change,colour=z)) + 
+  geom_smooth(method = 'loess',color="grey") +
+  geom_point(show.legend = FALSE,size=0.8) +
+  facet_wrap(~ title, ncol = 7,scales = "free") +
+  theme_tq() +
+  scale_y_continuous(labels = scales::percent)+
+  scale_colour_gradient(low = "#9fc7f1",high = "#d58383")+
+  labs(
+    title = "Yearly change of US CPI according to Relative Importance",
+    subtitle = "YoY change being positive and negative \n Jan 2016 to Aug 2021",
+    x = "",
+    y = "YoY % Change"
+  )
+```
+![](CPI2.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
