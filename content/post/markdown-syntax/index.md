@@ -82,40 +82,52 @@ ggplot(chart, aes(month, monthlyave,group=1)) + facet_wrap(~year) +
 ![](wan.jpg) 
 
 
-### Tfl_absolute_weekly_change
+### Absolute_Weekly_Change
 
-looks at percentage changes from the expected level of weekly rentals. The two grey shaded rectangles correspond to Q2 (weeks 14-26) and Q4 (weeks 40-52).
+Look at the percentage changes from the expected level of weekly rentals. The two grey shaded rectangles correspond to Q2 (weeks 14-26) and Q4 (weeks 40-52).
 
+```{r tfl_absolute_weekly_change}
+weekly_data <- bike %>% # Summing up the bike rentals for each week and filtering for 2016 - 2021
+  filter(year %in% c(2016,2017,2018,2019,2020,2021), week %in% c(1:52)) %>% 
+  group_by(year,week) %>% 
+  summarise(ave_bike=mean(bikes_hired))
 
+week53<-bike[bike$week=="53" & bike$year %in% c("2020","2021"),] %>% 
+  mutate(year=2020) %>% 
+  group_by(year,week) %>% 
+  summarise(ave_bike=mean(bikes_hired))
+weekly_data[nrow(weekly_data) + 1,] = week53
 
-Tables aren't part of the core Markdown spec, but Hugo supports supports them out-of-the-box.
+weekave<- bike %>% 
+  filter(year %in% c(2016,2017,2018,2019)) %>% 
+  group_by(week) %>% 
+  summarise(ave=mean(bikes_hired))
 
-   Name | Age
---------|------
-    Bob | 27
-  Alice | 23
+graph<-left_join(weekly_data,weekave,by="week") %>%  
+  mutate(change=((ave_bike-ave)/ave)-0.025)
+ggplot(graph,aes(x=week,y=change)) + facet_wrap(vars(year)) + geom_line(size = 1) + 
+  annotate("rect", xmin = 14, xmax = 27, ymin = -1, ymax = 1, alpha = .5,fill = "grey60") + 
+  annotate("rect", xmin = 40, xmax = 53, ymin = -1, ymax = 1, alpha = .5,fill = "grey60") +
+    theme(legend.position = 'none', 
+          panel.background = element_blank(), 
+          strip.background = element_blank(),
+          panel.grid.major = element_line(colour = "grey70", size = 0))+
+    geom_ribbon(aes(ymin = 0, ymax = pmax(change, 0), fill = "positive")) + 
+    geom_ribbon(aes(ymin = pmin(change, 0), ymax =0 , fill = "negative")) +
+    scale_fill_manual(values=c("#eab5b7", "#cbebce")) +
+  geom_rug(sides = "bl") +
+    scale_y_continuous(labels = scales::percent) +
+    scale_x_continuous(breaks=c(13,26,39,53))+
+ 
+   labs (
+    title = "Weekly changes in TfL bike rentals",
+    subtitle = "%Change from weekly average calculated between 2016 - 2019",
+    x     = "week")+
+  NULL
+  
+```
+![](week.jpg) 
 
-#### Inline Markdown within tables
-
-| Italics   | Bold     | Code   |
-| --------  | -------- | ------ |
-| *italics* | **bold** | `code` |
-
-
-
-
-
-
-
-
-#### Nested list
-
-* Fruit
-  * Apple
-  * Orange
-  * Banana
-* Dairy
-  * Milk
-  * Cheese
+We used the mean to calculate the expected rentals, as most of the observations follow a normal distribution and are not significantly skewed. But it is true that there are some weeks and months for which the observations are not normally distributed. Because of that, We also had a look at the graphs using the median. It did not change much about the shape of the curves.
 
 
