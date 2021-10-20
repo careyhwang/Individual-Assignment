@@ -2,6 +2,7 @@
 author: Hanrui Wang
 categories:
 - RMarkdown
+- Economy
 tags:
 - RMarkdown
 date: "2021-10-08"

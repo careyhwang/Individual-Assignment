@@ -1,49 +1,177 @@
 ---
-author: Hugo Authors
+author: Hanrui
 categories:
-- Test
-- Test with whitespaces
-date: "2019-03-09"
+- RMarkdown
+- Economy
+date: "2021-10-03"
 description: Lorem Ipsum Dolor Si Amet
-image: matt-le-SJSpo9hQf7s-unsplash.jpg
+image: GDP0.png
 tags:
-- markdown
-- text
-- tag with whitespaces
-title: Placeholder Text
+- RMarkdown
+- Economy
+title: GDP Components over Time
 ---
 
-Lorem est tota propiore conpellat pectoribus de pectora summo. <!--more-->Redit teque digerit hominumque toris verebor lumina non cervice subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc caluere tempus inhospita parcite confusaque translucet patri vestro qui optatis lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.
 
-1. Exierant elisi ambit vivere dedere
-2. Duce pollice
-3. Eris modo
-4. Spargitque ferrea quos palude
+## Background
 
-Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.
+At the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports). 
 
-1. Comas hunc haec pietate fetum procerum dixit
-2. Post torum vates letum Tiresia
-3. Flumen querellas
-4. Arcanaque montibus omnes
-5. Quidem et
+More more about GDP and the different approaches in calculating at the [Wikipedia GDP page](https://en.wikipedia.org/wiki/Gross_domestic_product).
 
-# Vagus elidunt
 
-<svg class="canon" xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 496 373" height="373" width="496"><g fill="none"><path stroke="#000" stroke-width=".75" d="M.599 372.348L495.263 1.206M.312.633l494.95 370.853M.312 372.633L247.643.92M248.502.92l246.76 370.566M330.828 123.869V1.134M330.396 1.134L165.104 124.515"></path><path stroke="#ED1C24" stroke-width=".75" d="M275.73 41.616h166.224v249.05H275.73zM54.478 41.616h166.225v249.052H54.478z"></path><path stroke="#000" stroke-width=".75" d="M.479.375h495v372h-495zM247.979.875v372"></path><ellipse cx="498.729" cy="177.625" rx=".75" ry="1.25"></ellipse><ellipse cx="247.229" cy="377.375" rx=".75" ry="1.25"></ellipse></g></svg>
+Look at the data from the [United Nations' National Accounts Main Aggregates Database](https://unstats.un.org/unsd/snaama/Downloads), which contains estimates of total GDP and its components for all countries from 1970 to today. Look at how GDP and its components have changed over time, and compare different countries and how much each component contributes to that country's GDP. 
 
-[The Van de Graaf Canon](https://en.wikipedia.org/wiki/Canons_of_page_construction#Van_de_Graaf_canon)
+Work with the file: [GDP and its breakdown at constant 2010 prices in US Dollars](http://unstats.un.org/unsd/amaapi/api/file/6) and it has already been saved in the Data directory. Have a look at the Excel file to see how it is structured and organised
 
-## Mane refeci capiebant unda mulcebat
 
-Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. **Faces illo pepulere** tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.
+## Data Processing
+### Download the Data 
 
-Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.
+```{r read_GDP_data}
+UN_GDP_data  <-  read_excel(here::here("data", "Download-GDPconstant-USD-countries.xlsx"), # Excel filename
+                sheet="Download-GDPconstant-USD-countr", # Sheet name
+                skip=2) # Number of rows to skip
 
-Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel **mitis temploque** vocatus, inque alis, *oculos nomen* non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides **parte**.
+```
 
-{{< css.inline >}}
-<style>
-.canon { background: white; width: 100%; height: auto; }
-</style>
-{{< /css.inline >}}
+### Tidy the data
+
+Tidy the data, as it is in wide format and make it into long, tidy format. Express all figures in billions (divide values by `1e9`, or $10^9$), and rename the indicators into something shorter.
+
+```{r reshape_GDP_data}
+tidy_GDP_data  <-  UN_GDP_data
+  
+tidy_GDP_data[,4:50]<-tidy_GDP_data[,4:50]/10^9
+k<-UN_GDP_data$`1970`/10^9
+
+glimpse(tidy_GDP_data)
+
+
+# Let us compare GDP components for these 3 countries
+country_list <- c("United States","India", "Germany")
+```
+
+
+## Plotting
+### GDP and its components
+```{r gdp1_3_countries, echo=FALSE, out.width="100%"}
+Chart<-tidy_GDP_data %>% 
+  filter(Country %in% country_list)
+
+Chart2<-data.frame(rep(Chart$Country,each=47))
+Chart2[,2]<-rep(Chart$IndicatorName,each=47)
+Chart2[,3]<-rep(1970:2016,times=51)
+data <- t(as.matrix(Chart[,4:50]))
+dim(data) <- c(2397,1)
+Chart2[,4]<-data
+names(Chart2)<-c("country","indicators","year","GDP")
+
+Chart2$indicators<-gsub("Exports of goods and services","Exports",Chart2$indicators)
+Chart2$indicators<-gsub("Imports of goods and services","Imports",Chart2$indicators)
+Chart2[Chart2$indicators=="Household consumption expenditure (including Non-profit institutions serving households)",2]="Household expenditure"
+Chart2$indicators<-gsub("General government final consumption expenditure","Government expenditure",Chart2$indicators)
+C<-Chart2 %>% 
+  filter(indicators %in% c("Gross capital formation","Exports","Imports","Household expenditure","Government expenditure"))
+C %>% 
+  ggplot(aes(x=year,y=GDP,group=indicators,col=indicators))+
+  geom_line()+
+  theme_tq()+
+  facet_wrap(~country)+
+  ylim(0, 12500) +
+    labs(
+    title = "GDP components over time",
+    subtitle = "In constant 2010 USD",
+    x = "",
+    y = "Billion US$")+
+  NULL
+```
+![](GDP.jpg)
+
+
+### GDP and breakdown
+
+Recall that GDP is the sum of Household Expenditure (Consumption *C*), Gross Capital Formation (business investment *I*), Government Expenditure (G) and Net Exports (exports - imports). Even though there is an indicator `Gross Domestic Product (GDP)` in the dataframe, calculate it given its components discussed above.
+
+
+```{r gdp2_reproduce, echo=FALSE, out.width="100%"}
+C2<-Chart2 %>% 
+  filter(indicators %in% c("Gross capital formation","Household expenditure","Government expenditure","Exports"))
+C2[C2$indicators=="Exports" & C2$country == "Germany",]$GDP=C[C$indicators=="Exports" & C$country == "Germany",]$GDP-C[C$indicators=="Imports" & C$country == "Germany",]$GDP
+C2[C2$indicators=="Exports" & C2$country == "India",]$GDP=C[C$indicators=="Exports" & C$country == "India",]$GDP-C[C$indicators=="Imports" & C$country == "India",]$GDP
+C2[C2$indicators=="Exports" & C2$country == "United States",]$GDP=C[C$indicators=="Exports" & C$country == "United States",]$GDP-C[C$indicators=="Imports" & C$country == "United States",]$GDP
+C2$indicators<-gsub("Exports","Net Exports",C2$indicators)
+C2[,5]<-0
+C2[1:188,5]<-rep(Chart2[Chart2$indicator=="Gross Domestic Product (GDP)" &  Chart2$country =="Germany",]$GDP,times=4)
+C2[189:(188*2),5]<-rep(Chart2[Chart2$indicator=="Gross Domestic Product (GDP)" &  Chart2$country =="India",]$GDP,times=4)
+C2[377:(188*3),5]<-rep(Chart2[Chart2$indicator=="Gross Domestic Product (GDP)" &  Chart2$country =="United States",]$GDP,times=4)
+C2<-C2 %>% 
+  mutate(proportion=GDP/V5)
+C2 %>% 
+  ggplot(aes(x=year,y=proportion ,group=indicators,col=indicators))+
+  geom_line()+
+  scale_y_continuous(labels = scales::percent) +
+  facet_wrap(~country)+
+    theme_tq()+
+    labs(
+    title = "GDP and its breakdown at constant 2010 prices in US Dollars",
+    x = "",
+    y = "proportion")+
+  NULL
+
+```
+
+![](GDP2.jpg)
+
+The last chart is showing us the composition of GDP i.e. the percentage contribution of each GDP factor (government expenditure, gross capital formation, household expenditure and net exports) for Germany, India and the USA. Germany has a fairly stable household expenditure over the time period. Net exports increases in this region from 2000 and is the highest net export percentage across all 3 countries which may be due to their strong automotive sector. India has the highest proportion of Gross capital formation. This could be because, especially relative to Germany and the US, India is a developing country (particularly in 2000) and so significant investment has been made to drive development. The sharp rise in investment (gross capital formation) has a counter-balancing relationship with household expenditure. This is because as people save a larger proportion of their income, there is more of an opportunity for significant country-wide investment. The US has experienced a gradual rise in household expenditure as a proportion of GDP as the country has not experienced fast growth but there has been a recent (2015 onwards) spike in this proportion which could be due to period of low interest rates. Government expenditure and gross capital formation in the US seem to have a symmetric relationship. A reason could be that the US government place significant importance in gross capital investment and so will bridge any gaps when 'natural agents' do not invest enough and step back when they invest a lot.
+
+
+
+### change the country_list (including China)
+
+
+```{r China}
+Chart<-tidy_GDP_data %>% 
+  filter(Country %in% c("China","United States","United Kingdom"))
+
+Chart2<-data.frame(rep(Chart$Country,each=47))
+Chart2[,2]<-rep(Chart$IndicatorName,each=47)
+Chart2[,3]<-rep(1970:2016,times=51)
+data <- t(as.matrix(Chart[,4:50]))
+dim(data) <- c(2397,1)
+Chart2[,4]<-data
+names(Chart2)<-c("country","indicators","year","GDP")
+
+Chart2$indicators<-gsub("Exports of goods and services","Exports",Chart2$indicators)
+Chart2$indicators<-gsub("Imports of goods and services","Imports",Chart2$indicators)
+Chart2[Chart2$indicators=="Household consumption expenditure (including Non-profit institutions serving households)",2]="Household expenditure"
+Chart2$indicators<-gsub("General government final consumption expenditure","Government expenditure",Chart2$indicators)
+C<-Chart2 %>% 
+  filter(indicators %in% c("Gross capital formation","Exports","Imports","Household expenditure","Government expenditure"))
+C %>% 
+  ggplot(aes(x=year,y=GDP,group=indicators,col=indicators))+
+  geom_line()+
+  theme_tq()+
+  facet_wrap(~country)+
+    labs(
+    title = "GDP components over time",
+    subtitle = "In constant 2010 USD",
+    x = "",
+    y = "Billion US$")+
+  NULL
+```
+
+![](GDP3.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
