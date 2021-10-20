@@ -12,7 +12,7 @@ description: Excess rentals in TfL bike sharing
 image: vac.png
 series:
 - Themes Guide
-title: Yield Curve Inversion
+title: "Vaccination Rates vs. Political Preferences"
 ---
 
 
