@@ -1,5 +1,9 @@
 ---
 author: Hanrui Wang
+categories:
+- RMarkdown
+tags:
+- RMarkdown
 date: "2021-10-08"
 description: Data from Fred
 math: true
