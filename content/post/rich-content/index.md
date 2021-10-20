@@ -2,6 +2,9 @@
 author: Hanrui Wang
 date: "2021-06-30"
 description: Tang and Song Dynasties
+categories:
+- hobbies
+- videos
 tags:
 - hobbies
 - videos

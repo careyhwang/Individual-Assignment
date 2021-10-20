@@ -1,7 +1,8 @@
 ---
 categories:
-#- Test
-#- 测试
+- Hobbies
+tags:
+- Hobbies
 date: "2021-10-16"
 description: "Camera: Olympus E-M5 Mark III"
 image: 20190918.jpg
