@@ -4,7 +4,7 @@ categories:
 - RMarkdown
 - Economy
 date: "2021-10-03"
-description: Lorem Ipsum Dolor Si Amet
+description:
 image: GDP0.png
 tags:
 - RMarkdown
