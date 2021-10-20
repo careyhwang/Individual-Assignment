@@ -23,6 +23,7 @@ permalinks:
     page: /:slug/
 
 params:
+    
     mainSections:
         - post
     featuredImageField: image
@@ -31,7 +32,7 @@ params:
 
     footer:
         since: 2021
-        customText: 
+        customText:
 
     dateFormat:
         published: Jan 02, 2006
