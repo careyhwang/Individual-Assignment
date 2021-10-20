@@ -3,7 +3,7 @@ author: Hanrui Wang
 categories:
 - RMarkdown
 date: "2021-09-12"
-description: Data from wikipedia
+description: Data from Pinterest & Weibo
 image: table.jpeg
 tags:
 - RMarkdown
