@@ -30,8 +30,8 @@ params:
     favicon:
 
     footer:
-        since: 2020
-        customText:
+        since: 2021
+        customText: 
 
     dateFormat:
         published: Jan 02, 2006
@@ -50,11 +50,11 @@ params:
         toc: true
         readingTime: true
         license:
-            enabled: true
+            enabled: false
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: true
+        enabled: false
         provider: disqus
 
         disqusjs:
@@ -177,7 +177,7 @@ menu:
           pre: home
           params:
               ### For demonstration purpose, the home link will be open in a new tab
-              newTab: true
+              newTab: false
 
 related:
     includeNewer: true
