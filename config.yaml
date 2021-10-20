@@ -180,27 +180,24 @@ menu:
               ### For demonstration purpose, the home link will be open in a new tab
               newTab: false
 
-        - identifier: Github
+        - identifier: Git
           name: Github
           url: https://github.com/careyhwang
-          weight: -50
-          pre: home   
+          weight: -80
+          pre: git 
           
         - identifier: Ins
           name: Instagram
           url: https://www.instagram.com/hanrui_wang/
-          weight: -40
-          pre: home  
+          weight: -80
+          pre: ins 
           
         - identifier: Linkedin
           name: Linkedin
           url: https://www.linkedin.com/in/careywang/
-          weight: -30
-          pre: home  
+          weight: -80
+          pre: linkedin 
           
-
-          
-
         
 related:
     includeNewer: true
