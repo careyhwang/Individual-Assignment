@@ -15,20 +15,24 @@ Literature and history courses such as professor Luo Yuming’s *History of Anci
 
 <!--more-->
 ---
-## YouTube Privacy Enhanced Shortcode
+## Tang Poetry and Song Ci Forms
+
+Chinese poetry is mostly expressed in the form of singing, using a variety of tunes to express the poets' emotions.
 
 {{< youtube v-8AOJbdsDQ >}}
+
 
 <br>
 
 ## Chinese Literature Scene
 
+Expressing love for the mountains and rivers is the eternal theme of Chinese poetry.
+
 {{< bilibili BV19E41197Kc >}}
 
 <br>
 
-## YouTube Privacy Enhanced Shortcode
-
+## Literature Courses in Fudan University
 
 This is my favorite course: *Appreciation of Classical Poetry* which tells the history of Chinese literature from *The Book of Songs*, the earliest anthologies of verse in china, to Tang Poetry and Song Ci.
 
