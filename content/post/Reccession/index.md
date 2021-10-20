@@ -4,8 +4,10 @@ aliases:
 author: Hanrui Wang
 categories:
 - RMarkdown
+- Economy
 tags:
 - RMarkdown
+- Economy
 date: "2021-10-06"
 description: Excess rentals in TfL bike sharing
 image: kk.jpg
