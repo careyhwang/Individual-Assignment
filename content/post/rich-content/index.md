@@ -18,15 +18,12 @@ Literature and history courses such as professor Luo Yuming’s *History of Anci
 
 ## YouTube Privacy Enhanced Shortcode
 
+
+This is my favorite course: *Appreciation of Classical Poetry* which tells the history of Chinese literature from *The Book of Songs*, the earliest anthologies of verse in china, to Tang Poetry and Song Ci.
+
+{{< bilibili BV1z4411W7cp >}}
+
 {{< youtube ZJthWmvUzzc >}}
-
-<br>
-
----
-
-## Twitter Simple Shortcode
-
-{{< twitter_simple 1085870671291310081 >}}
 
 <br>
 
