@@ -14,43 +14,79 @@ series:
 title: TfL Data Analysis
 ---
 
-This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
+Latest TfL data on how many bikes were hired every single day can be got from [London DataStore](https://data.london.gov.uk).
+
 <!--more-->
 
-## Headings
+## Data Cleaning
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+```{r, get_tfl_data, cache=TRUE}
+url <- "https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx"
 
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
+# Download TFL data to temporary file
+httr::GET(url, write_disk(bike.temp <- tempfile(fileext = ".xlsx")))
 
-## Paragraph
+# Use read_excel to read it as dataframe
+bike0 <- read_excel(bike.temp,
+                   sheet = "Data",
+                   range = cell_cols("A:B"))
 
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+# change dates to get year, month, and week
+bike <- bike0 %>% 
+  clean_names() %>% 
+  rename (bikes_hired = number_of_bicycle_hires) %>% 
+  mutate (year = year(day),
+          month = lubridate::month(day, label = TRUE),
+          week = isoweek(day))
+```
 
-Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+Create a facet grid that plots bikes hired by month and year.
 
-## Blockquotes
+![](tfl_distributions_monthly.png) 
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
 
-#### Blockquote without attribution
+## Excess Rentals in TfL Bike Sharing
+### Absolute_Monthly_Change
 
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-> **Note** that you can use *Markdown syntax* within a blockquote.
+```{r tfl_absolute_monthly_change_our_coding}
+bikerentals<-bike %>% 
+  group_by(year,month) %>% 
+  summarise(monthlyave=mean(bikes_hired))
+bikeave<- bike %>% 
+  group_by(month) %>% 
+  summarise(totalave=mean(bikes_hired))
+bikerentals <-bikerentals %>% 
+  filter(year %in% c(2016,2017,2018,2019,2020,2021))
+bikerentals$monthlyave<-bikerentals$monthlyave-3015.56
+chart<-left_join(bikerentals,bikeave,by="month") 
+ggplot(chart, aes(month, monthlyave,group=1)) + facet_wrap(~year) + 
+    geom_line(size = 1) + 
+    geom_line(aes(month, totalave),colour='#1827e7', size = 1) + 
+    theme(legend.position = 'none', strip.background = element_blank(), panel.background = element_blank())+
+  
+    geom_ribbon(aes(ymin = monthlyave, ymax = pmin(monthlyave, totalave), fill = "positive")) + 
+    geom_ribbon(aes(ymin = totalave, ymax = pmin(monthlyave, totalave), fill = "negative")) +
+    scale_fill_manual(values=c("#eab5b7", "#cbebce")) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ 
+  
+   labs (
+    title = "Monthly changes in TfL bike rentals",
+    subtitle = "Change from monthly average shown in blue and calculated between 2016 - present",
+    x     = "month",
+    y = "Bike rentals"
+  )+
+  NULL
+```
 
-#### Blockquote with attribution
+![](wan.jpg) 
 
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
 
-[^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
+### Tfl_absolute_weekly_change
 
-## Tables
+looks at percentage changes from the expected level of weekly rentals. The two grey shaded rectangles correspond to Q2 (weeks 14-26) and Q4 (weeks 40-52).
+
+
 
 Tables aren't part of the core Markdown spec, but Hugo supports supports them out-of-the-box.
 
@@ -65,63 +101,12 @@ Tables aren't part of the core Markdown spec, but Hugo supports supports them ou
 | --------  | -------- | ------ |
 | *italics* | **bold** | `code` |
 
-## Code Blocks
 
-#### Code block with backticks
 
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
-```
 
-#### Code block indented with four spaces
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>Example HTML5 Document</title>
-    </head>
-    <body>
-      <p>Test</p>
-    </body>
-    </html>
 
-#### Code block with Hugo's internal highlight shortcode
-{{< highlight html >}}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
-{{< /highlight >}}
 
-## List Types
-
-#### Ordered List
-
-1. First item
-2. Second item
-3. Third item
-
-#### Unordered List
-
-* List item
-* Another item
-* And another item
 
 #### Nested list
 
@@ -133,14 +118,4 @@ Tables aren't part of the core Markdown spec, but Hugo supports supports them ou
   * Milk
   * Cheese
 
-## Other Elements — abbr, sub, sup, kbd, mark
 
-<abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
-
-H<sub>2</sub>O
-
-X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
-
-Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
-
-Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
