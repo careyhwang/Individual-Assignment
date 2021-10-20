@@ -15,6 +15,17 @@ Literature and history courses such as professor Luo Yuming’s *History of Anci
 
 <!--more-->
 ---
+## YouTube Privacy Enhanced Shortcode
+
+{{< youtube v-8AOJbdsDQ >}}
+
+<br>
+
+## Chinese Literature Scene
+
+{{< bilibili BV19E41197Kc >}}
+
+<br>
 
 ## YouTube Privacy Enhanced Shortcode
 
@@ -23,16 +34,7 @@ This is my favorite course: *Appreciation of Classical Poetry* which tells the h
 
 {{< bilibili BV1z4411W7cp >}}
 
-{{< youtube ZJthWmvUzzc >}}
-
 <br>
-
 ---
 
-## Vimeo Simple Shortcode
 
-{{< vimeo_simple 48912912 >}}
-
-## Chinese Literature Scene
-
-{{< bilibili BV19E41197Kc >}}
