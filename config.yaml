@@ -32,7 +32,7 @@ params:
 
     footer:
         since: 2021
-        customText:
+        customText: "Address: Flat 11, Grove End House, Grove End Road, NW8 9HS, London, UK" 
 
     dateFormat:
         published: Jan 02, 2006
@@ -180,6 +180,28 @@ menu:
               ### For demonstration purpose, the home link will be open in a new tab
               newTab: false
 
+        - identifier: Github
+          name: Github
+          url: https://github.com/careyhwang
+          weight: -50
+          pre: home   
+          
+        - identifier: Ins
+          name: Instagram
+          url: https://www.instagram.com/hanrui_wang/
+          weight: -40
+          pre: home  
+          
+        - identifier: Linkedin
+          name: Linkedin
+          url: https://www.linkedin.com/in/careywang/
+          weight: -30
+          pre: home  
+          
+
+          
+
+        
 related:
     includeNewer: true
     threshold: 60
