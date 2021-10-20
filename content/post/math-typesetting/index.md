@@ -16,18 +16,13 @@ image: CPI.jpg
 ## Data Processing
 
 
-### Find [CPI components at FRED](https://fredaccount.stlouisfed.org/public/datalist/843).
-
-```{r,load_movies, warning=FALSE, message=FALSE}
-movies <- read_csv(here::here("data", "movies.csv"))
-```
-
-### Data Cleaning
+Find [CPI components at FRED](https://fredaccount.stlouisfed.org/public/datalist/843). And then:
 
 1. Generate a vector of components, and then pass it to `tidyquant::tq_get(get = "economic.data", from =  "2000-01-01")` to get all data since January 1, 2000
 
 1. Since the data downloaded is an index with various starting dates, we have to calculate the yearly, or 12-month change, using the `lag` function, and specifically, `year_change = value/lag(value, 12) - 1`, which means comparing the current month's value with that 12 months ago lag(value, 12).
 1. Order components so the higher the yearly change, the earlier does that component appear.
+
 1. Make sure that the **All Items** CPI (CPIAUCSL) appears first.
 
 ```{r}
