@@ -10,7 +10,7 @@ tags:
 - Economy
 date: "2021-10-06"
 description: Excess rentals in TfL bike sharing
-image: kk.jpg
+image: kk.jpg 
 series:
 - Themes Guide
 title: Yield Curve Inversion
