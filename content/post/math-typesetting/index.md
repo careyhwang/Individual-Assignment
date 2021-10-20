@@ -9,7 +9,7 @@ date: "2021-10-08"
 description: Data from Fred
 math: true
 title: Changes of CPI and Its Components
-image: CPI.jpg
+image: kk.jpeg
 ---
 
 
