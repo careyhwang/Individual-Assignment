@@ -10,7 +10,7 @@ menu:
   main:
     pre: user
     weight: -90
-title: About/Resume
+title: Resume
 ---
 
 Hello, I'm Hanrui Wang from China.
