@@ -2,7 +2,7 @@
 author: Hanrui Wang
 categories:
 - RMarkdown
-date: "2021-09-12"
+date: "2021-10-04"
 description: Data from wikipedia
 image: poll.jpg
 tags:

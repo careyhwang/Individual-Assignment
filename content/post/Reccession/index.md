@@ -8,7 +8,7 @@ categories:
 tags:
 - RMarkdown
 - Economy
-date: "2021-10-06"
+date: "2021-09-06"
 description: Excess rentals in TfL bike sharing
 image: kk.jpg 
 series:
