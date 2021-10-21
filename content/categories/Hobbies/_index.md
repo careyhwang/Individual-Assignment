@@ -1,6 +1,6 @@
 ---
 description: Category showing my interests
-image: hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg
+image: IMG_0476.JPG
 slug: Hobbies
 style:
   background: '#2a9d8f'
