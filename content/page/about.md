@@ -14,6 +14,8 @@ title: Resume
 ---
 
 Hello, I'm Hanrui Wang from China.
+Email: hwang.mfa2022@london.edu
+
 
 ## [Resume](https://onedrive.live.com/download?cid=8B111EC9836194CC&resid=8B111EC9836194CC%21106&authkey=AIuuns3v4YuJF2U&em=2)
 
@@ -41,4 +43,3 @@ Hello, I'm Hanrui Wang from China.
 
 
 
-Email: hwang.mfa2022@london.edu
