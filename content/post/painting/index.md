@@ -2,7 +2,7 @@
 author: Hanrui Wang
 categories:
 - Hobbies
-date: "2021-09-12"
+date: "2021-09-20"
 description: Data from Pinterest & Weibo
 image: table.jpeg
 tags:
