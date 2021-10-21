@@ -12,7 +12,11 @@ title: Painting
 
 <!--more-->
 
-##  Ancient Chinese Painters
+I have always been fascinated by painting, from classical Chinese painting to modern board painting. I am obsessed with how people use color and line to express life emotion and cognition of the world. I prefer Chinese ink and wash paintings, which leave more space for imagination and enhance the atmosphere of the works to the utmost. 
+
+Here are a few painters I like very much.
+
+##  My Ancient Painters
 ### 王希孟·宋 Wang Ximeng·Song Dynasty
 ![](8.jpg)  
 ![](9.jpg)
