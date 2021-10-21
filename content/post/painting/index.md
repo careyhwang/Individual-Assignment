@@ -27,8 +27,14 @@ Here are a few painters I like very much.
 
 ## My Favorite Digital Board Painter
 ### 长阳 Changyang
-![](1.jpg)  ![](2.png)  ![](3.jpg)  
-![](IMG_0459.jpg)
+![](1.jpg)  ![](2.png)  
+![](IMG_0459.jpg) 
+
+![](3.jpg)  ![](IMG_0010.JPG) 
+
+![](IMG_0473.JPG)
+
+
 
 ### 眠狼 Mianlang
 ![](4.jpg)  ![](5.jpg)  
