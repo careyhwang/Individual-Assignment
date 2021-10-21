@@ -6,7 +6,7 @@ categories:
 - RMarkdown
 tags:
 - RMarkdown
-date: "2021-10-06"
+date: "2021-10-08"
 description: Excess rentals in TfL bike sharing
 image: ttt.jpg
 series:

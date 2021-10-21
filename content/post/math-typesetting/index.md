@@ -5,7 +5,7 @@ categories:
 - Economy
 tags:
 - RMarkdown
-date: "2021-10-08"
+date: "2021-10-10"
 description: Data from Fred
 math: true
 title: Changes of CPI and Its Components

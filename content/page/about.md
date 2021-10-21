@@ -3,8 +3,7 @@ aliases:
 - about-us
 - about-hugo
 - contact
-date: "2019-02-28"
-description: Hugo, the world's fastest framework for building websites
+date: "2021-10-20"
 lastmod: "2020-10-09"
 license: CC BY-NC-ND
 menu:
@@ -14,22 +13,30 @@ menu:
 title: About
 ---
 
-Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
+Hello, I'm Hanrui Wang from China.
 
-Hugo makes use of a variety of open source projects including:
+## EDUCATION
+### 2021 - 2023	London Business School/Fudan School of Management   
 
-* https://github.com/yuin/goldmark
-* https://github.com/alecthomas/chroma
-* https://github.com/muesli/smartcrop
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
+* Reading for Masters in Financial Analysis, Double Degree Programme    
+* Courses: Mergers and Acquisitions, Analysis of Financial Statements, Securities Valuation, Investment
 
-P8210045.jpg
+### 2016 - 2021	Fudan School of Management, Shanghai, China
+* BSc in Statistics, Fudan Distinguished Undergraduate Scholarship
+* Double major in journalism
+* Researched role of Application of Blockchain in Education Based on Middle School Students in Chengdu
 
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
+### 2019 - 2020	University of Leeds, Leeds, UK
+* Exchange Program - Mathematics
 
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
+### 2017 - 2019	Shanghai International Studies University, Shanghai, China
+* Minor in French
 
-Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
 
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
+## PRACTICE EXPERIENCE
+* Served as deputy leader of Department of International Affairs of Fudan Student Union to organize school’s largest international student cultural exchange talent competition, Fudan Idol
+*	Volunteered teaching 50+ students in a village school in Anhui, edited supporting education video (2018)
+
+
+
+Email: hwang.mfa2022@london.edu
