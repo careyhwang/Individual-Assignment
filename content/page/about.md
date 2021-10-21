@@ -10,10 +10,12 @@ menu:
   main:
     pre: user
     weight: -90
-title: About
+title: About/Resume
 ---
 
 Hello, I'm Hanrui Wang from China.
+
+## [Resume](https://onedrive.live.com/download?cid=8B111EC9836194CC&resid=8B111EC9836194CC%21106&authkey=AIuuns3v4YuJF2U&em=2)
 
 ## EDUCATION
 ### 2021 - 2023	London Business School/Fudan School of Management   
