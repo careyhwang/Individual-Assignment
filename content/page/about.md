@@ -13,7 +13,7 @@ menu:
 title: Resume
 ---
 
-Hello, I'm Hanrui Wang from China.
+Hello, I'm Hanrui Wang from China.  
 Email: hwang.mfa2022@london.edu
 
 
